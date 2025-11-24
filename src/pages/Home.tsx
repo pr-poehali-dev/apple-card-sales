@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -12,20 +11,38 @@ interface CardProduct {
   available_count: number;
 }
 
+const cardProducts: CardProduct[] = [
+  {
+    id: 1,
+    amount: 500,
+    price: 500,
+    description: 'Apple Gift Card на 500 рублей',
+    available_count: 12,
+  },
+  {
+    id: 2,
+    amount: 1000,
+    price: 1000,
+    description: 'Apple Gift Card на 1000 рублей',
+    available_count: 18,
+  },
+  {
+    id: 3,
+    amount: 3000,
+    price: 3000,
+    description: 'Apple Gift Card на 3000 рублей',
+    available_count: 9,
+  },
+  {
+    id: 4,
+    amount: 5000,
+    price: 5000,
+    description: 'Apple Gift Card на 5000 рублей',
+    available_count: 6,
+  },
+];
+
 const Home = () => {
-  const [cards, setCards] = useState<CardProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/cards')
-      .then(res => res.json())
-      .then(data => {
-        setCards(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
   const floatingIcons = [
     { name: 'Smartphone', delay: '0s', top: '20%', left: '15%' },
     { name: 'Headphones', delay: '1s', top: '30%', right: '20%' },
@@ -99,41 +116,33 @@ const Home = () => {
             Выберите номинал
           </h2>
           
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map(i => (
-                <Card key={i} className="p-8 animate-pulse bg-card/50" />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {cards.map((card, index) => (
-                <Link
-                  key={card.id}
-                  to={`/payment?cardId=${card.id}`}
-                  className="block animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="gradient-border hover:scale-105 transition-transform duration-300">
-                    <Card className="gradient-border-inner p-8 text-center">
-                      <div className="mb-4">
-                        <Icon name="Gift" size={48} className="mx-auto text-primary animate-pulse-glow" />
-                      </div>
-                      <h3 className="text-3xl font-bold mb-2">{card.amount}₽</h3>
-                      <p className="text-muted-foreground text-sm mb-4">{card.description}</p>
-                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
-                        <Icon name="CheckCircle" size={16} className="text-green-500" />
-                        <span>В наличии: {card.available_count}</span>
-                      </div>
-                      <Button className="w-full rounded-full bg-primary hover:bg-primary/90">
-                        Купить за {card.price}₽
-                      </Button>
-                    </Card>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {cardProducts.map((card, index) => (
+              <Link
+                key={card.id}
+                to={`/payment?cardId=${card.id}`}
+                className="block animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="gradient-border hover:scale-105 transition-transform duration-300">
+                  <Card className="gradient-border-inner p-8 text-center">
+                    <div className="mb-4">
+                      <Icon name="Gift" size={48} className="mx-auto text-primary animate-pulse-glow" />
+                    </div>
+                    <h3 className="text-3xl font-bold mb-2">{card.amount}₽</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{card.description}</p>
+                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
+                      <Icon name="CheckCircle" size={16} className="text-green-500" />
+                      <span>В наличии: {card.available_count}</span>
+                    </div>
+                    <Button className="w-full rounded-full bg-primary hover:bg-primary/90">
+                      Купить за {card.price}₽
+                    </Button>
+                  </Card>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
