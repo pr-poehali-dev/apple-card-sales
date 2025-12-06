@@ -5,6 +5,15 @@
       "method": "OPTIONS",
       "path": "/",
       "expectedStatus": 200
+    },
+    {
+      "name": "Test POST with invalid data",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "image": ""
+      },
+      "expectedStatus": 400
     }
   ]
 }

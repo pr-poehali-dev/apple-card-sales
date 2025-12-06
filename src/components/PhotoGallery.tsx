@@ -42,22 +42,35 @@ const PhotoGallery = () => {
     if (!selectedFile) return;
 
     setUploading(true);
-    const formData = new FormData();
-    formData.append('photo', selectedFile);
 
     try {
-      const response = await fetch('https://functions.poehali.dev/15daaa5d-f994-4184-b101-c828cc0ce115', {
-        method: 'POST',
-        body: formData,
-      });
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64 = e.target?.result as string;
+        
+        const response = await fetch('https://functions.poehali.dev/15daaa5d-f994-4184-b101-c828cc0ce115', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ image: base64 }),
+        });
 
-      if (response.ok) {
-        setSelectedFile(null);
-        await loadPhotos();
-      }
+        if (response.ok) {
+          setSelectedFile(null);
+          await loadPhotos();
+        }
+        setUploading(false);
+      };
+      
+      reader.onerror = () => {
+        console.error('Ошибка чтения файла');
+        setUploading(false);
+      };
+      
+      reader.readAsDataURL(selectedFile);
     } catch (error) {
       console.error('Ошибка загрузки:', error);
-    } finally {
       setUploading(false);
     }
   };
