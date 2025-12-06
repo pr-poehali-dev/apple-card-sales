@@ -162,10 +162,10 @@ const PhotoGallery = () => {
 
         {modalPhoto && (
           <div 
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 animate-fade-in"
             onClick={() => setModalPhoto(null)}
           >
-            <div className="relative max-w-5xl max-h-[90vh] w-full">
+            <div className="relative max-w-3xl w-full animate-scale-in">
               <button
                 onClick={() => setModalPhoto(null)}
                 className="absolute -top-12 right-0 text-white hover:text-primary transition-colors"
@@ -175,7 +175,7 @@ const PhotoGallery = () => {
               <img
                 src={modalPhoto.url}
                 alt="Увеличенное фото"
-                className="w-full h-full object-contain rounded-lg"
+                className="w-full h-auto object-contain rounded-lg shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
