@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
+import PhotoGallery from '@/components/PhotoGallery';
 
 interface CardProduct {
   id: number;
@@ -166,6 +167,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <PhotoGallery />
 
       <footer className="py-12 px-6 border-t border-border">
         <div className="container mx-auto text-center">
