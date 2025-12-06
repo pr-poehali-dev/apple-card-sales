@@ -14,6 +14,7 @@ const PhotoGallery = () => {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [modalPhoto, setModalPhoto] = useState<Photo | null>(null);
 
   useEffect(() => {
     loadPhotos();
@@ -142,6 +143,7 @@ const PhotoGallery = () => {
               <Card
                 key={photo.id}
                 className="overflow-hidden group cursor-pointer hover:scale-105 transition-transform duration-300"
+                onClick={() => setModalPhoto(photo)}
               >
                 <div className="aspect-square relative">
                   <img
@@ -155,6 +157,28 @@ const PhotoGallery = () => {
                 </div>
               </Card>
             ))}
+          </div>
+        )}
+
+        {modalPhoto && (
+          <div 
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setModalPhoto(null)}
+          >
+            <div className="relative max-w-5xl max-h-[90vh] w-full">
+              <button
+                onClick={() => setModalPhoto(null)}
+                className="absolute -top-12 right-0 text-white hover:text-primary transition-colors"
+              >
+                <Icon name="X" size={32} />
+              </button>
+              <img
+                src={modalPhoto.url}
+                alt="Увеличенное фото"
+                className="w-full h-full object-contain rounded-lg"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
           </div>
         )}
       </div>
