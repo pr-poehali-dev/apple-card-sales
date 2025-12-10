@@ -95,8 +95,8 @@ const Home = () => {
 
         <div className="container mx-auto text-center relative z-10 animate-fade-in">
           <img
-            src="https://cdn.poehali.dev/projects/c7f22410-1cee-431a-a4c7-72eab64ec77f/files/41b6b47f-11e5-4426-bd85-f18a76312e50.jpg"
-            alt="Apple Store"
+            src="https://cdn.poehali.dev/projects/c7f22410-1cee-431a-a4c7-72eab64ec77f/files/b8de9db8-60b1-461e-92db-dfc91ff28603.jpg"
+            alt="Динозавр в рождественском колпаке"
             className="w-64 h-64 mx-auto mb-8 object-contain"
           />
           <h1 className="text-6xl md:text-7xl font-bold mb-6 gradient-text">
