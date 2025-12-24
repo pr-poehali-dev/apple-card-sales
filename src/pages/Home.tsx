@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import PhotoGallery from '@/components/PhotoGallery';
+import { useState, useEffect } from 'react';
 
 interface CardProduct {
   id: number;
@@ -42,6 +43,48 @@ const cardProducts: CardProduct[] = [
     available_count: 6,
   },
 ];
+
+const RandomNumber = () => {
+  const [randomNumber, setRandomNumber] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchRandomNumber = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('https://functions.poehali.dev/6a21acd4-58ed-4aae-9a54-57c22e0efee6');
+      const data = await response.json();
+      setRandomNumber(data.number);
+    } catch (error) {
+      console.error('Ошибка загрузки случайного числа:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRandomNumber();
+  }, []);
+
+  return (
+    <div className="mb-6 p-4 bg-card rounded-lg shadow-sm">
+      <p className="text-lg text-muted-foreground mb-2">
+        Случайное число дня:
+      </p>
+      <p className="text-4xl font-bold text-primary">
+        {loading ? '...' : randomNumber}
+      </p>
+      <Button 
+        onClick={fetchRandomNumber} 
+        disabled={loading}
+        variant="outline"
+        size="sm"
+        className="mt-3"
+      >
+        Получить новое
+      </Button>
+    </div>
+  );
+};
 
 const Home = () => {
   const floatingIcons = [
@@ -99,6 +142,7 @@ const Home = () => {
             alt="Динозавр в рождественском колпаке"
             className="w-64 h-64 mx-auto mb-8 object-cover rounded-full"
           />
+          <RandomNumber />
           <h1 className="text-6xl md:text-7xl font-bold mb-6 gradient-text">
             Apple Gift Cards
           </h1>

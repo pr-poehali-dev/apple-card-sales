@@ -1,0 +1,18 @@
+{
+  "tests": [
+    {
+      "name": "Get random number",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Handle OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}
